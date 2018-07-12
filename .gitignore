@@ -1,9 +1,9 @@
 .vscode
 .DS_STORE
 node_modules
-app/node_modules
 release
 .module-cache
 *.log*
 build
 dist
+app/dist
