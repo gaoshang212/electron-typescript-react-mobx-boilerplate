@@ -7,3 +7,4 @@ release
 build
 dist
 app/dist
+package-lock.json
