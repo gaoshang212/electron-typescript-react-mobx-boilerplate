@@ -1,4 +1,4 @@
-# Frontend Boilerplate with React, MobX & TypeScript
+# Electron Boilerplate with React, MobX & TypeScript
 
 A bare minimum react-mobx-webpack-typescript boilerplate with TodoMVC example.
 
@@ -6,13 +6,16 @@ Note that this project does not include **Server-Side Rendering**,  **Testing Fr
 
 Ideal for creating React apps from the scratch.
 
-See also: [react-redux-typescript-boilerplate](https://github.com/rokoroku/react-redux-typescript-boilerplate)
+#### See also:
+
+- [react-mobx-typescript-boilerplate](https://github.com/rokoroku/react-mobx-typescript-boilerplate)
+- [react-redux-typescript-boilerplate](https://github.com/rokoroku/react-redux-typescript-boilerplate)
 
 ## Contains
 
 - [x] [Typescript](https://www.typescriptlang.org/) 2.7
 - [x] [React](https://facebook.github.io/react/) 16
-- [x] [React Router](https://github.com/ReactTraining/react-router) 4.2
+- [x] [React Router](https://github.com/ReactTraining/react-router) 4.3
 - [x] [Mobx](https://github.com/mobxjs/mobx)
 - [x] [Mobx React](https://github.com/mobxjs/mobx-react)
 - [x] [Mobx React Router](https://github.com/alisd23/mobx-react-router/)
@@ -31,6 +34,10 @@ See also: [react-redux-typescript-boilerplate](https://github.com/rokoroku/react
 - [x] [React Hot Loader](https://github.com/gaearon/react-hot-loader)
 - [x] [ExtractText Plugin](https://github.com/webpack/extract-text-webpack-plugin)
 - [x] [HTML Webpack Plugin](https://github.com/ampedandwired/html-webpack-plugin)
+- [x] [electron-rebuild](https://github.com/electron/electron-rebuild)
+
+### Package tools 
+- [x] [electron-builder](https://github.com/electron-userland/electron-builder) 20.20
 
 
 ## Setup
@@ -42,13 +49,14 @@ $ npm install
 ## Running
 
 ```
+$ npm run build
 $ npm start
 ```
 
-## Build
+## Dev
 
 ```
-$ npm run build
+$ npm run dev
 ```
 
 ## Code Format
