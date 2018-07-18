@@ -1,6 +1,6 @@
 {
   "name": "electron-typescript-react-mobx-boilerplate",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "a election boilerplate with React, MobX and Typescript",
   "main": "./main/main.js",
   "scripts": {
