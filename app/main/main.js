@@ -6,9 +6,9 @@ let menu;
 let template;
 let mainWindow = null;
 
-const winURL = process.env.NODE_ENV === 'development' ?
-    `http://localhost:3000/index.html` :
-    `file://${__dirname}/../dist/index.html`
+// const winURL = process.env.NODE_ENV === 'development' ?
+//     `http://localhost:3000/index.html` :
+//     `file://${__dirname}/../dist/index.html`
 
 if (process.env.NODE_ENV === 'production') {
     const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -79,7 +79,7 @@ function createWindow() {
         title: 'electron',
     });
 
-    mainWindow.loadURL(winURL);
+    mainWindow.loadURL(`file://${__dirname}/../app.html`);
 
     mainWindow.webContents.on('did-finish-load', () => {
         mainWindow.show();

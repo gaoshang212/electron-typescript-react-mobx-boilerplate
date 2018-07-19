@@ -1,11 +1,17 @@
 var webpack = require('webpack');
 var path = require('path');
-const { spawn } = require('child_process');
+const {
+  spawn
+} = require('child_process');
+const {
+  dependencies: externals
+} = require('./app/package.json');
 
 // variables
 var isProduction = process.argv.indexOf('-p') >= 0;
-var sourcePath = path.join(__dirname, './app/renderer');
+var sourcePath = path.join(__dirname, './app');
 var outPath = path.join(__dirname, './app/dist');
+const port = process.env.PORT || 3000;
 
 // plugins
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,15 +20,17 @@ var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 
 module.exports = {
   context: sourcePath,
-  entry: {
-    main: './main.tsx'
-  },
+  entry: [
+    './app.tsx'
+  ],
   output: {
     path: outPath,
     filename: 'bundle.js',
-    chunkFilename: '[chunkhash].js',
     //publicPath: '/'
+    publicPath: !isProduction ? `http://localhost:${port}/dist/` : './',
+    libraryTarget: 'commonjs2'
   },
+
   target: 'electron-renderer',
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
@@ -38,17 +46,15 @@ module.exports = {
       // .ts, .tsx
       {
         test: /\.tsx?$/,
-        use: isProduction
-          ? 'ts-loader'
-          : ['babel-loader?plugins=react-hot-loader/babel', 'ts-loader']
+        use: isProduction ?
+          'ts-loader' : ['babel-loader?plugins=react-hot-loader/babel', 'ts-loader']
       },
       // css
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            {
+          use: [{
               loader: 'css-loader',
               query: {
                 modules: true,
@@ -62,7 +68,9 @@ module.exports = {
               options: {
                 ident: 'postcss',
                 plugins: [
-                  require('postcss-import')({ addDependencyTo: webpack }),
+                  require('postcss-import')({
+                    addDependencyTo: webpack
+                  }),
                   require('postcss-url')(),
                   require('postcss-cssnext')(),
                   require('postcss-reporter')(),
@@ -76,9 +84,18 @@ module.exports = {
         })
       },
       // static assets
-      { test: /\.html$/, use: 'html-loader' },
-      { test: /\.png$/, use: 'url-loader?limit=10000' },
-      { test: /\.jpg$/, use: 'file-loader' }
+      {
+        test: /\.html$/,
+        use: 'html-loader'
+      },
+      {
+        test: /\.png$/,
+        use: 'url-loader?limit=10000'
+      },
+      {
+        test: /\.jpg$/,
+        use: 'file-loader'
+      }
     ]
   },
   // optimization: {
@@ -104,10 +121,13 @@ module.exports = {
       filename: 'styles.css',
       disable: !isProduction
     }),
-    new HtmlWebpackPlugin({
-      template: 'assets/index.html'
-    })
+    // new HtmlWebpackPlugin({
+    //   template: 'assets/index.html'
+    // })
   ],
+
+  externals: Object.keys(externals || {}),
+
   devServer: {
     contentBase: sourcePath,
     hot: true,
@@ -117,16 +137,18 @@ module.exports = {
     },
     stats: 'minimal',
     after: function (app) {
-      spawn('npm', ['run', 'start-hot'], { shell: true, env: process.env, stdio: 'inherit' })
-      .on('close', code => process.exit(code))
-      .on('error', spawnError => console.error(spawnError));
+      spawn('npm', ['run', 'start-hot'], {
+          shell: true,
+          env: process.env,
+          stdio: 'inherit'
+        })
+        .on('close', code => process.exit(code))
+        .on('error', spawnError => console.error(spawnError));
     }
   },
   devtool: 'cheap-module-eval-source-map',
   node: {
     // workaround for webpack-dev-server issue
     // https://github.com/webpack/webpack-dev-server/issues/60#issuecomment-103411179
-    fs: 'empty',
-    net: 'empty'
   }
 };
