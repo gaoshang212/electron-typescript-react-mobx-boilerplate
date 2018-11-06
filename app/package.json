@@ -8,7 +8,5 @@
   },
   "author": "gaoshang",
   "license": "MIT",
-  "dependencies": {
-    "koolearn-sign": "^0.1.0"
-  }
+  "dependencies": {}
 }

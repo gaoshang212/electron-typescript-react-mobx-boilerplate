@@ -8,10 +8,7 @@ import { createStores } from './renderer/stores';
 import { App } from './renderer/app';
 
 // enable MobX strict mode
-//useStrict(true);
-configure({
-  enforceActions: true
-});
+configure({ enforceActions: 'observed' });
 
 // default fixtures for TodoStore
 const defaultTodos = [
